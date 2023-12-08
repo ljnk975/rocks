@@ -21,7 +21,7 @@ while [ $# -ge 1 ]; do
 			;;
 		--source)
 			SOURCE=true
-			baseURL="http://github.com/rocksclusters"
+			baseURL="https://github.com/rc-ucr"
 			;;
 		--tag)
 			tag_name=$2

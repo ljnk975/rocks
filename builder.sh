@@ -15,7 +15,6 @@ popd
 
 BUILDROLL=src/roll/rocksbuild/build-roll.sh
 
-FIRSTPASSROLLS="base rocksbuild kernel" 
 FIRSTPASSROLLS="core base kernel" 
 
 # Build remaining rolls 
@@ -30,9 +29,11 @@ if [ $? -ne 0 ]; then
 	ROLLS="$ROLLS condor"
 fi
 
-ROLLS="$ROLLS ganglia hpc java sge web-server python perl bio fingerprint_roll kvm zfs-linux"
-ROLLS="ganglia hpc python fingerprint_roll kvm zfs-linux openvswitch sge condor perl rabbitmq-roll img-storage-roll"
-ROLLS="$ROLLS area51"
+# selection of additional rolls to be build
+#ROLLS="$ROLLS ganglia hpc java sge web-server python perl bio fingerprint_roll kvm zfs-linux"
+#ROLLS="ganglia hpc python fingerprint_roll kvm zfs-linux openvswitch sge condor perl rabbitmq-roll img-storage-roll"
+#ROLLS="$ROLLS area51"
+ROLLS="ganglia sge"
 
 #
 # download all the binaries first 
@@ -51,7 +52,6 @@ for roll in $FIRSTPASSROLLS $ROLLS; do
 	fi
 done
 df -h
-
 
 
 for fproll in $FIRSTPASSROLLS; do 
@@ -73,11 +73,12 @@ for fproll in $FIRSTPASSROLLS; do
 	rocks enable roll $fproll
 	# Special handling of base roll. to create rocks-anaconda-updates,
         # various rocks-created RPMS need to be in the distribution.
-	if [ "$fproll" == "base" ]; then
-		make -C src/updates.img rpm
-		make reroll
-		rocks add roll $fproll*iso clean=y
-	fi
+	# Not necessary for CentOS 7.x - skipped here
+	#if [ "$fproll" == "base" ]; then
+	#	make -C src/updates.img rpm
+	#	make reroll
+	#	rocks add roll $fproll*iso clean=y
+	#fi
 	popd
 	echo "--- Completed build of $fproll: `date`"
 done
@@ -127,7 +128,7 @@ pushd /export/rocks/install
 rocks create distro
 popd
 df -h
+# os rolls are now build in bootstrap step of base roll
 # $BUILDROLL -s -z -p src/roll os &> /tmp/build-os.out
-
 
 echo "Builder.sh Complete at `date`"
