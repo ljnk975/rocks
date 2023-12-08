@@ -2,5 +2,5 @@ src/roll/rocksbuild
 src/roll/base
 src/roll/kernel
 src/roll/core
-src/roll/ganglia/
-src/roll/sge/
+src/roll/ganglia
+src/roll/sge
