@@ -21,7 +21,7 @@ while [ $# -ge 1 ]; do
 	    ;;
 	--source)
 	    SOURCE=true
-	    baseURL="https://github.com/rc-ucr"
+	    baseURL="https://github.com/ljnk975"
 	    ;;
 	--release)
 	    rel_name=$2
